@@ -23,16 +23,11 @@ class Bacia(models.Model):
     comprimento = models.FloatField(null=False, blank=True)
     engenheiro = models.ForeignKey(Engenheiro, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.nome
 
 class Endereco(models.Model):
     rua = models.CharField(max_length=50)
-    numero = models.IntegerField(max_length=10)
+    numero = models.IntegerField()
     bairro = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
     cep = models.CharField(max_length=8)
-
-    def __str__(self):
-        return self.nome
