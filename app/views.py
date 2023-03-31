@@ -2,7 +2,13 @@ from django.shortcuts import render
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Bacia
+from .serializers import BaciaSerializer
+
 
 def bacias_view(request):
     bacias = Bacia.objects.all()
@@ -19,3 +25,9 @@ def bacias_view(request):
             'engenheiro': bacia.engenheiro.nome,
         })
     return JsonResponse(data)
+
+class BaciaList(APIView):
+    def get(self, request):
+        bacias = Bacia.objects.all()
+        serializer = BaciaSerializer(bacias, many=True)
+        return Response(serializer.data)
