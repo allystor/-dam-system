@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'barragens.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'barragem',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
