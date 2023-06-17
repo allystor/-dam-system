@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar bg-dark border-bottom border-bottom-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand text-light bg-dark" href="{% url 'engenheiro' %}">Lista de Engenheiros</a>
+        </div>
+    </nav>
+    <form method="post" class="p-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.nome.id_for_label }}" class="form-label">Nome:</label>
+            {{ form.nome }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.cpf.id_for_label }}" class="form-label">CPF:</label>
+            {{ form.cpf }}
+            <small class="form-text text-muted">Digite um CPF no formato: xxx.xxx.xxx-xx</small>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.crea.id_for_label }}" class="form-label">CREA:</label>
+            {{ form.crea }}
+        </div>
+        <div class="buttons-form mx-auto p-2" style="width: 200px;">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
+        </div>
+    </form>
+</body>
+</html>

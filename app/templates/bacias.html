@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -6,8 +7,55 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bacias</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
+    <nav class="navbar bg-dark border-bottom border-bottom-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-light bg-dark" href="{% url 'gerenciamento' %}">Gerenciamento</a>
+        <a class="navbar-brand text-light bg-dark" href="{% url 'add-bacia' %}">Adicionar</a>
+      </div>
+    </nav>
+    <table>
+    <thead>
+      <tr>
+        <th>Tipo de Bacia</th>
+        <th>Endereço</th>
+        <th>Profundidade</th>
+        <th>Capacidade</th>
+        <th>Largura</th>
+        <th>Comprimento</th>
+        <th>Engenheiro</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for bacia in items %}
+    <tr>
+      <td><a href="{% url 'edit-bacia' bacia.id %}">{{ bacia.tipoBacia }}</a></td>
+      <td>{{ bacia.endereco.rua }} - {{ bacia.endereco.numero }} </td>
+      <td>{{ bacia.profundidade }} metro(s)</td>
+      <td>{{ bacia.capacidade }}</td>
+      <td>{{ bacia.largura }} metro(s)</td>
+      <td>{{ bacia.comprimento }} metro(s)</td>
+      <td>{{ bacia.engenheiro }} </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
 </body>
 </html>
