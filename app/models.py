@@ -29,6 +29,9 @@ class Endereco(models.Model):
     def __str__(self):
         return f'{self.rua} - {self.numero}'
 
+    def __str__(self):
+        return f'{self.rua} - {self.numero}'
+
 
 class Bacia(models.Model):
     tipoBacia = models.ForeignKey(TipoBacia, on_delete=models.CASCADE)
