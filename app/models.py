@@ -11,7 +11,7 @@ class TipoBacia(models.Model):
 
 class Engenheiro(models.Model):
     nome = models.CharField(max_length=50)
-    cpf = models.CharField(max_length=11)
+    cpf = models.CharField(max_length=14)
     crea = models.CharField(max_length=10)
 
     def __str__(self):
@@ -24,7 +24,10 @@ class Endereco(models.Model):
     bairro = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f'{self.rua} - {self.numero}'
 
 
 class Bacia(models.Model):

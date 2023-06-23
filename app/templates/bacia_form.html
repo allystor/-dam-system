@@ -14,67 +14,65 @@
       <a class="navbar-brand text-light bg-dark" href="{% url 'bacias' %}">Lista de Bacias</a>
     </div>
   </nav>
-  <div class="position-absolute top-50 start-50 translate-middle border border-1 shadow p-3 mb-5 bg-body-tertiary rounded">
     <form method="post" class="p-4">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="{{ form.tipoBacia.id_for_label }}" class="form-label">Tipo de Bacia:</label>
-        <select id="{{ form.tipoBacia.id_for_label }}" name="{{ form.tipoBacia.name }}" class="form-control">
-          {% for choice in form.tipoBacia.field.choices %}
-              {% if choice.0 == form.tipoBacia.value %}
-                  <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
-              {% else %}
-                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-              {% endif %}
-          {% endfor %}
-        </select>
-      </div>
-      <div class="field-wrapper mb-3">
-        <label for="{{ form.endereco.id_for_label }}" class="form-label">Endereço:</label>
-        <select id="{{ form.endereco.id_for_label }}" name="{{ form.endereco.name }}" class="form-control">
-          {% for choice in form.endereco.field.choices %}
-              {% if choice.0 == form.endereco.value %}
-                  <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
-              {% else %}
-                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-              {% endif %}
-          {% endfor %}
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="{{ form.profundidade.id_for_label }}" class="form-label">Profundidade:</label>
-        {{ form.profundidade }}
-      </div>
-      <div class="mb-3">
-        <label for="{{ form.capacidade.id_for_label }}" class="form-label">Capacidade:</label>
-        {{ form.capacidade }}
-      </div>
-      <div class="mb-3">
-        <label for="{{ form.largura.id_for_label }}" class="form-label">Largura:</label>
-        {{ form.largura }}
-      </div>
-      <div class="mb-3">
-        <label for="{{ form.comprimento.id_for_label }}" class="form-label">Comprimento:</label>
-        {{ form.comprimento }}
-      </div>
-      <div class="mb-3">
-        <label for="{{ form.engenheiro.id_for_label }}" class="form-label">Engenheiro:</label>
-        <select id="{{ form.engenheiro.id_for_label }}" name="{{ form.engenheiro.name }}" class="form-control">
-          {% for choice in form.engenheiro.field.choices %}
-              {% if choice.0 == form.engenheiro.value %}
-                  <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
-              {% else %}
-                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-              {% endif %}
-          {% endfor %}
-        </select>
-      </div>
+    {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.tipoBacia.id_for_label }}" class="form-label">Tipo de Bacia:</label>
+            <select id="{{ form.tipoBacia.id_for_label }}" name="{{ form.tipoBacia.name }}" class="form-control">
+                {% for choice in form.tipoBacia.field.choices %}
+                {% if choice.0 == form.tipoBacia.value %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="field-wrapper mb-3">
+            <label for="{{ form.endereco.id_for_label }}" class="form-label">Endereço:</label>
+            <select id="{{ form.endereco.id_for_label }}" name="{{ form.endereco.name }}" class="form-control">
+                {% for choice in form.endereco.field.choices %}
+                {% if choice.0 == form.endereco.value %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.profundidade.id_for_label }}" class="form-label">Profundidade:</label>
+            {{ form.profundidade }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.capacidade.id_for_label }}" class="form-label">Capacidade:</label>
+            {{ form.capacidade }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.largura.id_for_label }}" class="form-label">Largura:</label>
+            {{ form.largura }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.comprimento.id_for_label }}" class="form-label">Comprimento:</label>
+            {{ form.comprimento }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.engenheiro.id_for_label }}" class="form-label">Engenheiro:</label>
+            <select id="{{ form.engenheiro.id_for_label }}" name="{{ form.engenheiro.name }}" class="form-control">
+                {% for choice in form.engenheiro.field.choices %}
+                {% if choice.0 == form.engenheiro.value %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
 
-      <div class="buttons-form mx-auto p-2" style="width: 200px;">
-        <button type="submit" class="btn btn-success">Salvar</button>
-        <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
-      </div>
+        <div class="buttons-form mx-auto p-2" style="width: 200px;">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
+        </div>
     </form>
-  </div>
 </body>
 </html>

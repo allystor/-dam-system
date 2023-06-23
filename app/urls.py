@@ -20,4 +20,7 @@ urlpatterns = [
 
     path('', gerenciamento, name='gerenciamento'),
 
+    path('login/', user_login, name='login'),
+    path('register/', user_register, name='register'),
+    path('logout/', logout_view, name='logout'),
 ]

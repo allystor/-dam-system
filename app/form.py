@@ -47,3 +47,14 @@ class BaciaForm(forms.ModelForm):
             'comprimento': forms.NumberInput(attrs={'class': 'form-control'}),
             'engenheiro': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tipoBacia'].required = True
+        self.fields['endereco'].required = True
+        self.fields['profundidade'].required = True
+        self.fields['capacidade'].required = True
+        self.fields['largura'].required = True
+        self.fields['comprimento'].required = True
+        self.fields['engenheiro'].required = True
+

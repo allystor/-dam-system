@@ -33,4 +33,42 @@
         </div>
     </form>
 </body>
+
+<script>
+    var campoCPF = document.getElementById("id_{{ form.cpf.html_name }}");
+
+    campoCPF.addEventListener('input', function() {
+        formatarCPF(this);
+    });
+
+    campoCPF.addEventListener('keydown', function(event) {
+        var key = event.keyCode || event.charCode;
+
+        if (key === 8 || key === 46) { // Teclas "Backspace" ou "Delete"
+            this.value = ""; // Limpa o valor do campo
+        }
+    });
+
+    function formatarCPF(campo) {
+        var valor = campo.value;
+        var cpfSemPontuacao = valor.replace(/[.-]/g, "");
+        var cpfFormatado = "";
+
+        cpfSemPontuacao = cpfSemPontuacao.slice(0, 11); // Limita para 11 dígitos
+
+        for (var i = 0; i < cpfSemPontuacao.length; i++) {
+            cpfFormatado += cpfSemPontuacao[i];
+
+            if (i === 2 || i === 5) {
+                cpfFormatado += ".";
+            } else if (i === 8) {
+                cpfFormatado += "-";
+            }
+        }
+
+        campo.value = cpfFormatado;
+    }
+</script>
+
+
 </html>
