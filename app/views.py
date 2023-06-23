@@ -2,9 +2,12 @@ from django.shortcuts import render
 
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .models import *
@@ -13,18 +16,24 @@ from .form import *
 
 # Gerenciamento --------------------------------------------------------------------------------------------------------
 
-@login_required
+
 def gerenciamento(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     return render(request, 'gerenciamento.html')
 
 # Engenheiro -----------------------------------------------------------------------------------------------------------
 
-@login_required
 def engenheiro_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     items = Engenheiro.objects.order_by('-id')
     return render(request, 'engenheiro.html', {'items': items})
-@login_required
+
+
 def engenheiro_create(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = EngenheiroForm(request.POST)
         if form.is_valid():
@@ -33,8 +42,11 @@ def engenheiro_create(request):
     else:
         form = EngenheiroForm()
     return render(request, 'engenheiro_form.html', {'form': form})
-@login_required
+
+
 def engenheiro_edit(request, id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     engenheiro = Engenheiro.objects.get(id=id)
     if request.method == 'POST':
         form = EngenheiroForm(request.POST, instance=engenheiro)
@@ -47,13 +59,17 @@ def engenheiro_edit(request, id):
 
 # Endereco -------------------------------------------------------------------------------------------------------------
 
-@login_required
+
 def endereco_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     items = Endereco.objects.order_by('-id')
     return render(request, 'enderecos.html', {'items': items})
 
-@login_required
+
 def endereco_create(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = EnderecoForm(request.POST)
         if form.is_valid():
@@ -63,8 +79,10 @@ def endereco_create(request):
         form = EnderecoForm()
     return render(request, 'endereco_form.html', {'form': form})
 
-@login_required
+
 def endereco_edit(request, id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     endereco = Endereco.objects.get(id=id)
     if request.method == 'POST':
         form = EnderecoForm(request.POST, instance=endereco)
@@ -77,13 +95,17 @@ def endereco_edit(request, id):
 
 # Tipo Bacias ----------------------------------------------------------------------------------------------------------
 
-@login_required
+
 def tipo_bacia_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     items = TipoBacia.objects.order_by('-id')
     return render(request, 'tipo_bacias.html', {'items': items})
-@login_required
+
 
 def tipo_bacia_create(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = TipoBaciaForm(request.POST)
         if form.is_valid():
@@ -93,8 +115,10 @@ def tipo_bacia_create(request):
         form = TipoBaciaForm()
     return render(request, 'tipo_bacia_form.html', {'form': form})
 
-@login_required()
+
 def tipo_bacia_edit(request, id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     tipo_bacia = TipoBacia.objects.get(id=id)
     if request.method == 'POST':
         form = TipoBaciaForm(request.POST, instance=tipo_bacia)
@@ -107,8 +131,10 @@ def tipo_bacia_edit(request, id):
 
 # Bacias View ----------------------------------------------------------------------------------------------------------
 
-@login_required
+
 def bacias_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     bacias = Bacia.objects.all()
     data = {
         'bacias': []
@@ -124,20 +150,24 @@ def bacias_view(request):
         })
     return JsonResponse(data)
 
-@login_required
+
 class BaciaList(APIView):
     def get(self, request):
         bacias = Bacia.objects.all()
         serializer = BaciaSerializer(bacias, many=True)
         return Response(serializer.data)
 
-@login_required
+
 def bacia_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     items = Bacia.objects.all()
     return render(request, 'bacias.html', {'items': items})
 
-@login_required
+
 def bacia_create(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         form = BaciaForm(request.POST)
         if form.is_valid():
@@ -147,8 +177,10 @@ def bacia_create(request):
         form = BaciaForm()
     return render(request, 'bacia_form.html', {'form': form})
 
-@login_required
+
 def bacia_edit(request, id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     item = Bacia.objects.get(pk=id)
     if request.method == 'POST':
         form = BaciaForm(request.POST, instance=item)
@@ -161,3 +193,35 @@ def bacia_edit(request, id):
     else:
         form = BaciaForm(instance=item)
     return render(request, 'bacia_form.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('gerenciamento')
+            else:
+                error_message = 'Nome de usuário ou senha inválidos.'
+                return render(request, 'login.html', {'form': form, 'error_message': error_message})
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def user_register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('gerenciamento')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

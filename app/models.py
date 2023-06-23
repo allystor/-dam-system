@@ -26,6 +26,9 @@ class Endereco(models.Model):
     estado = models.CharField(max_length=50)
     cep = models.CharField(max_length=8)
 
+    def __str__(self):
+        return f'{self.rua} - {self.numero}'
+
 
 class Bacia(models.Model):
     tipoBacia = models.ForeignKey(TipoBacia, on_delete=models.CASCADE)
